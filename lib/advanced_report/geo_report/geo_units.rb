@@ -36,7 +36,7 @@ class AdvancedReport::GeoReport::GeoUnits < AdvancedReport::GeoReport
     [:state, :country].each do |type|
       ruportdata[type] = Table(%w[location Units])
       data[type].each { |k, v| ruportdata[type] << { "location" => v[:name], "Units" => v[:units] } }
-      ruportdata[type].sort_rows_by!(["Units"])
+      ruportdata[type].sort_rows_by("Units", :order => :descending)
       ruportdata[type].rename_column("location", type.to_s.capitalize)
     end
   end
