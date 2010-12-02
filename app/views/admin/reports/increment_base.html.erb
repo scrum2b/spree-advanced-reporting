@@ -53,6 +53,7 @@ function drawChart() {
 		width: 800,
 		height: 400,
 		legend : 'none',
+                hAxis: { slantedText: true, slantedTextAngle: 30 },
 		title: '<%= type.to_s.capitalize + ' ' + @report.name %>' });
         <% end -%> 
 	

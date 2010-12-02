@@ -36,6 +36,10 @@
 <% content_for :head do -%>
 <%= javascript_include_tag 'jquery.tablesorter.min.js', 'advanced_reporting.js' %>
 <%= stylesheet_link_tag 'advanced_reporting' %>
+<script type="text/javascript">
+var created_at_before = "<%= (params && params[:search] && params[:search][:created_at_before]) ? params[:search][:created_at_before] : '' %>";
+var created_at_after = "<%= (params && params[:search] && params[:search][:created_at_after]) ? params[:search][:created_at_after] : '' %>";
+</script>
 <% end -%>
     
 <% if params[:advanced_reporting] -%>

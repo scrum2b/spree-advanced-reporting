@@ -18,12 +18,10 @@ class AdvancedReport::IncrementReport::Revenue < AdvancedReport::IncrementReport
     self.orders.each do |order|
       date = {}
       INCREMENTS.each do |type|
-        date[type] = order.completed_at.strftime(dates[type][:date_hash])
+        date[type] = get_bucket(type, order.completed_at)
         data[type][date[type]] ||= {
           :value => 0, 
-          :display => type == :weekly ? get_week_display(order.completed_at) : order.completed_at.strftime(dates[type][:date_display]),
-          :timestamp => type == :weekly ? get_prior_sunday(order.completed_at).to_i :
-             Time.parse(order.completed_at.strftime(dates[type][:timestamp])).to_i
+          :display => get_display(type, order.completed_at),
         }
       end
       rev = order.item_total
