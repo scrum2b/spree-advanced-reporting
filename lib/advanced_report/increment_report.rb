@@ -32,6 +32,17 @@ class AdvancedReport::IncrementReport < AdvancedReport
         :header_display => 'Yearly',
       }
     }
+    date = Date.strptime(params[:search][:created_at_after], "%m/%d/%Y") - 1
+    before_date = Date.strptime(params[:search][:created_at_before], "%m/%d/%Y")
+    while date <= before_date
+      INCREMENTS.each do |type|
+         data[type][get_bucket(type, date.to_time)] ||= {
+          :value => 0, 
+          :display => get_display(type, date.to_time),
+        }
+      end
+      date = date.next
+    end
   end
 
   def generate_ruport_data

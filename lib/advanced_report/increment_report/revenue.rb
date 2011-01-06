@@ -16,14 +16,7 @@ class AdvancedReport::IncrementReport::Revenue < AdvancedReport::IncrementReport
     self.total = 0
       
     self.orders.each do |order|
-      date = {}
-      INCREMENTS.each do |type|
-        date[type] = get_bucket(type, order.completed_at)
-        data[type][date[type]] ||= {
-          :value => 0, 
-          :display => get_display(type, order.completed_at),
-        }
-      end
+      date = INCREMENTS.inject({}) { |hash, type| hash[type] = get_bucket(type, order.completed_at); hash }
       rev = order.item_total
       if !self.product.nil? && product_in_taxon
         rev = order.line_items.select { |li| li.product == self.product }.inject(0) { |a, b| a += b.quantity * b.price }

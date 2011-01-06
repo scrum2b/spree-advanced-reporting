@@ -13,6 +13,14 @@ class AdvancedReport
     self.params = params
     self.data = {}
     self.ruportdata = {}
+
+    if params[:search][:created_at_after].blank?
+      params[:search][:created_at_after] = Order.minimum(:completed_at).beginning_of_day.strftime("%m/%d/%Y")
+    end
+    if params[:search][:created_at_before].blank?
+      params[:search][:created_at_before] = Order.maximum(:completed_at).end_of_day.strftime("%m/%d/%Y")
+    end
+
     search = Order.searchlogic(params[:search])
     search.checkout_complete = true
     search.state_does_not_equal('canceled')

@@ -15,14 +15,7 @@ class AdvancedReport::IncrementReport::Units < AdvancedReport::IncrementReport
     super(params)
     self.total = 0
     self.orders.each do |order|
-      date = {}
-      INCREMENTS.each do |type|
-        date[type] = get_bucket(type, order.completed_at)
-        data[type][date[type]] ||= {
-          :value => 0, 
-          :display => get_display(type, order.completed_at),
-        }
-      end
+      date = INCREMENTS.inject({}) { |hash, type| hash[type] = get_bucket(type, order.completed_at); hash }
       units = units(order)
       INCREMENTS.each { |type| data[type][date[type]][:value] += units }
       self.total += units
