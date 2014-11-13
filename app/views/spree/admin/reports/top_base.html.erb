@@ -1,0 +1,13 @@
+<%= raw @report.ruportdata.to_html %>
+
+<div style="float:left;" class="two columns">
+    <div class="report_details">
+        <h1><%=t "adv_report." + @report.name.downcase.gsub(/ /,"_") %></h1>
+        <p><%= @report.description %></p>
+        <%= @report.taxon_text %>
+        <%= @report.product_text %>
+    </div>
+
+    <%= render :partial => 'spree/admin/reports/advanced_report_criteria', :locals => {} %>
+
+</div>
