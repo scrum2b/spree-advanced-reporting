@@ -1,4 +1,4 @@
-class Admin::AdvancedReportOverviewController < Admin::BaseController
+class Admin::AdvancedReportOverviewController < Spree::Admin::BaseController
   def index
     @reports = Admin::ReportsController::ADVANCED_REPORTS
     @products = Product.all
